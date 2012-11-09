@@ -1,0 +1,219 @@
+﻿<header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p class="site-title">
+                <a href="~/">EVault WebCC API</a></p>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="featured" >
+        <div class="content-wrapper" >
+            <hgroup class="title"  >
+                <h1 >Welcome to EVault Web CC API!</h1><br />
+                <h2>This is a test page providing access to the exposed EVault Web Central Control API methods.  </h2>
+            </hgroup>
+            <p>
+                This is a ASP.NET Web API allowing access to certain SOAP WebCC API methods. Note, this is a subset of methods available through the WebCC API. <a href="http://ec2-107-22-101-18.compute-1.amazonaws.com/WebCCAPI/Service.asmx" >
+See Service Documentation</a>
+            </p>
+            <p>
+                To view the Vault Service API test page click <a href="~/">here</a>.
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h3>Available WebCC API Methods:</h3>
+        <ol class="round">
+            <li class="one">
+                <h5>Get All Companies</h5>
+               SOAP Method to create company on WebCC.    
+                <br />          
+                <br /> 
+                <button id="getCompanies" style="font-size:.9em">Submit</button>         
+                   <br /><br />Response: <br />
+                <textarea id="getCompaniesResponse" style="height:150px; width:90%; font-size:.9em"></textarea>
+            </li>
+            <li class="two">
+                <h5>Create Company</h5>
+               SOAP Method to create company on WebCC.
+                <a href="http://ec2-107-22-101-18.compute-1.amazonaws.com/WebCCAPI/Service.asmx?op=CreateCompany" target="_blank">Learn more…</a><br />
+                <table style="font-size:.9em; margin:0px 0px 0px 0px; " >
+                    <tr>
+                        <td>Company&nbsp;Name:</td>
+                        <td><input id="companyName" type="text" style="font-size:.9em" /></td>
+                        <td>Contact Name:</td>
+                        <td><input id="contactName" type="text" style="font-size:.9em" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input id="email" type="text" style="font-size:.9em" /></td>
+                        <td>Phone:</td>
+                        <td><input id="phone" type="text" style="font-size:.9em" value=""  /></td>
+                    </tr>
+                </table>
+                <button id="createCompany" style="font-size:.9em">Submit</button>         
+                   <br /><br />Response: <br />
+                <textarea id="createCompanyResponse" style="height:150px; width:90%; font-size:.9em"></textarea>
+            </li>
+            <li class="three">
+                <h5>Create User</h5>
+               SOAP Method to create a user on WebCC.
+                <a href="http://ec2-107-22-101-18.compute-1.amazonaws.com/WebCCAPI/Service.asmx?op=CreateCompany">Learn more…</a><br />
+                <table style="font-size:.9em; margin:0px 0px 0px 0px; " >
+                    <tr>
+                        <td>Company&nbsp;Name:</td>
+                        <td><input id="userCompanyName" type="text" style="font-size:.9em" /></td>
+                        <td>User Role:</td>
+                        <td><select name="userRole" id="userRole" style="font-size:.9em">
+	                    <option selected="selected" value="AccountAdmin">Account administrator</option>
+	                    <option value="User">User</option>
+	                    <option value="ExecuteOnly">Execute only user</option>
+	                    <option value="ViewOnly">View only user</option>
+	                    <option value="Support">View only user</option>
+                    </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>First&nbsp;Name:</td>
+                        <td><input id="firstName" type="text" style="font-size:.9em" /></td>
+                        <td>Last&nbsp;Name:</td>
+                        <td><input id="lastName" type="text" style="font-size:.9em" value=""  /></td>
+                    </tr>
+                    <tr>
+                        <td>WebCC&nbsp;User&nbsp;Name (email):</td>
+                        <td><input id="userName" type="text" style="font-size:.9em" /></td>
+                        <td>WebCC&nbsp;User&nbsp;Password:</td>
+                        <td><input id="password" type="password" style="font-size:.9em" value=""  /></td>
+                    </tr>
+                    <tr>
+                        <td>Profile&nbsp;Account:</td>
+                        <td><input id="profileAccount" type="text" style="font-size:.9em" /></td>
+                        <td>Profile Address:</td>
+                        <td><input id="profileAddress" type="text" style="font-size:.9em" value=""  /></td>
+                    </tr>
+                    <tr>
+                        <td>Profile&nbsp;User&nbsp;Name:</td>
+                        <td><input id="profileUser" type="text" style="font-size:.9em" /></td>
+                        <td>Profile&nbsp;User&nbsp;Password:</td>
+                        <td><input id="profilePassword" type="password" style="font-size:.9em" value=""  /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Profile&nbsp;Vault&nbsp;Name:</td>
+                        <td><input id="profileVaultName" type="text" style="font-size:.9em" /></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <button id="createUser" style="font-size:.9em">Submit</button>         
+                   <br /><br />Response: <br />
+                <textarea id="createUserResponse" style="height:150px; width:90%; font-size:.9em"></textarea>
+            </li>
+      
+        </ol>
+    </section>
+
+</div>
+
+    <script type="text/javascript">
+       
+
+        $(document).ready(function () {
+            var url = "@Href("../../api/webcc/companies")";
+            // get companies 
+            $("#getCompanies").click(function () {
+                url = url + "/"
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success:
+                         function (data) {
+                             var xmlText = new XMLSerializer().serializeToString(data);
+                             var xmlPrettyText = vkbeautify.xml(xmlText)
+                             $("#getCompaniesResponse").val(xmlPrettyText);
+                         }
+                        ,
+                    dataType: "xml"
+                });
+
+            });
+
+
+
+            // create company 
+            $("#createCompany").click(function () {
+                var url = "@Href("../../api/webcc/companies")";
+                url = url + "/"
+                data = new Object();
+                data['companyName'] = $("#companyName").val();
+                data['contactName'] = $("#contactName").val();
+                data['email'] = $("#email").val();
+                data['phone'] = $("#phone").val();
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    success: 
+                         function (data) {
+                             var xmlText = new XMLSerializer().serializeToString(data);
+                             var xmlPrettyText = vkbeautify.xml(xmlText)
+                             $("#createCompanyResponse").val(xmlPrettyText);
+                         }                    
+                        ,
+                    dataType: "xml"
+                });
+
+            });
+
+            // create company 
+            $("#createUser").click(function () {
+
+                if ($("#userCompanyName").val() == "") {
+                    alert("Enter company name");
+                    return;
+                }
+
+                var url = "@Href("../../api/webcc/companies")";
+                url = url + "/" + $("#userCompanyName").val();
+
+                data = new Object();
+                data['userRole'] = $("#userRole").val();
+                data['firstName'] = $("#firstName").val();
+                data['lastName'] = $("#lastName").val();
+
+                data['userName'] = $("#userName").val();
+                data['password'] = $("#password").val();
+
+                var profile = new Object();
+                profile['account'] = $("#profileAccount").val();
+                profile['address'] = $("#profileAddress").val();
+                profile['user'] = $("#profileUser").val();
+                profile['password'] = $("#profilePassword").val();
+                profile['vaultName'] = $("#profileVaultName").val();
+
+                data['profile'] = profile;
+//                alert(JSON.stringify(data));
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    success:
+                         function (data) {
+                             var xmlText = new XMLSerializer().serializeToString(data);
+                             var xmlPrettyText = vkbeautify.xml(xmlText)
+                             $("#createUserResponse").val(xmlPrettyText);
+                         }
+                        ,
+                    dataType: "xml"
+                });
+
+            });
+
+
+
+        });
+
+
+    </script>

@@ -1,0 +1,597 @@
+﻿<header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p class="site-title">
+                <a href="~/">EVault Vault Web API</a></p>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1 >Welcome to EVault Vault Web API!</h1><br />
+                <h2>This is a test page providing access to the exposed Vault API methods.</h2>
+            </hgroup>
+            <p>
+                This is a ASP.NET Web API allowing access to certain Vault API COM methods. <a href="~/Home/QuickStart">See Quick Start Guide</a>
+            </p>
+            <p>
+                To view the WebCC API test page click <a href="~/Home/WebCCApi">here</a>.
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h3>Available Vault Service Web Methods:</h3>
+        <ol class="round">
+            <li class="one">
+                <h5>Create Customer - /api/customers</h5>
+               POST Method allows creation of customer, account, and user on a particular vault.
+                <a href="~/Home/QuickStart">Learn more…</a><br />
+                <table style="font-size:.9em; margin:0px 0px 0px 0px; " >
+                    <tr>
+                        <td>Customer&nbsp;Name:</td>
+                        <td><input id="customerName" type="text" style="font-size:.9em" /></td>
+                        <td>Email:</td>
+                        <td><input id="customerEmail" type="text" style="font-size:.9em" /></td>
+                    </tr>
+                    <tr>
+                        <td>Vault Short&nbsp;Name:</td>
+                        <td><input id="shortName" type="text" style="font-size:.9em" /></td>
+                        <td>Vault:</td>
+                        <td><input id="vaultName" type="text" style="font-size:.9em" value="DogtownServer" disabled="disabled" /></td>
+                    </tr>
+                    <tr>
+                        <td>User&nbsp;Name:</td>
+                        <td><input id="userName" type="text" style="font-size:.9em" /></td>
+                        <td>Password:</td>
+                        <td><input id="password" type="password"  /></td>
+                    </tr>
+                </table>
+                <button id="createCustomer" style="font-size:.9em">Submit</button>         
+                   <br /><br />Response: <br />
+                <textarea id="createCustomerResponse" style="height:150px; width:90%; font-size:.9em"></textarea>
+            </li>
+            <li class="two">
+                <h5>Get All Customers - /api/customers</h5>
+                  GET Method retrieves all customers for a particular vault. Includes optional parameters to retrieve registered computers and usage details.
+                <table style="font-size: .9em; margin: 0px 0px 0px 0px;">
+                    <tr>
+                        <td colspan="4">
+                            Populate&nbsp;Computers:&nbsp;<input id="getCustomersPopulateComputers" type="checkbox"  />
+                            &nbsp;&nbsp;&nbsp;
+                            Populate&nbsp;Usage:&nbsp;<input  id="getCustomersPopulateUsage" type="checkbox" />
+                        </td>
+                        <td><button id="getCustomers">Submit</button></td>
+               
+                     </tr>
+                </table>
+    
+                <span id="getCustomersMessage"><br /></span>
+                <textarea id="getCustomersResponse" style="height: 150px; width: 90%; font-size: .9em"></textarea>
+
+            </li>
+            <li class="three">
+                <h5>Get Customer - /api/customers/[customerName]</h5>
+                  GET Method retrieves a customer for a particular vault. Includes optional parameters to retrieve registered computers and usage details.
+                <table style="font-size: .9em; margin: 0px 0px 0px 0px;">
+
+                    <tr>
+                        <td> 
+                           Customer Name:                  
+                        </td>
+                        <td><input type="text" id="getCustomer_Name"/></td>  
+                        <td></td>           
+                     </tr>
+                    <tr>
+                        <td colspan="2">                            
+                            Populate&nbsp;Computers:&nbsp;<input id="getCustomerPopulateComputers" type="checkbox" checked="checked" />
+                            &nbsp;&nbsp;&nbsp;
+                            Populate&nbsp;Usage:&nbsp;<input  id="getCustomerPopulateUsage" type="checkbox" checked="checked" />
+                            &nbsp;
+                            <button id="getCustomer">Submit</button>
+                        </td>
+                        <td colspan="2"></td>               
+                     </tr>
+                </table>
+                <span id="getCustomerMessage"><br /></span>
+                <textarea id="getCustomerResponse" style="height: 150px; width: 90%; font-size: .9em"></textarea>
+            </li>
+            <li class="four">
+                <h5>Get Customer Computers - /api/customers/[customerName]/computers</h5>
+                  GET Method retrieves a customer's computer for a particular vault. Includes optional parameters to retrieve usage details.
+                <table style="font-size: .9em; margin: 0px 0px 0px 0px;">
+                    <tr>
+                        <td> 
+                           Customer Name:                  
+                        </td>
+                        <td><input type="text" id="customerComputer_Name"/></td>  
+                        <td></td>           
+                     </tr>
+                    <tr>
+                        <td colspan="2">                            
+                            Populate&nbsp;Usage:&nbsp;<input  id="customerComputerPopulateUsage" type="checkbox" checked="checked" />
+                            &nbsp;
+                            <button id="getCustomerComputer">Submit</button>
+                        </td>
+                        <td colspan="2"></td>               
+                     </tr>
+                </table>
+                <span id="getCustomerComputerMessage"><br /></span>
+                <textarea id="getCustomerComputerResponse" style="height: 150px; width: 90%; font-size: .9em"></textarea>
+            </li>
+
+
+
+
+
+                <li class="five">
+                <h5>Update Customer - /api/customers/[customerName]</h5>
+               PUT Method updates customer, account, and user details on a particular vault.  Note, this is only a representational sample of updateable Customer fields.  The Vault Short Name is EVault's unique indentifier and is not updateable.
+                <br />
+                <table style="font-size:.9em; margin:0px 0px 0px 0px; " >
+                    <tr>
+                        <td>Existing&nbsp;Cust&nbsp;Name:</td>
+                        <td><input id="updateCustomerName" type="text" style="font-size:.9em" /></td>
+                        <td>New Cust Name:</td>
+                        <td><input id="updateNewCustomerName" type="text" style="font-size:.9em" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input id="updateEmail" type="text" style="font-size:.9em" /></td>
+                        <td>Contact Name:</td>
+                        <td><input id="updateContactName" type="password"  /></td>
+                    </tr>
+
+                </table>
+                <button id="updateCustomer" style="font-size:.9em">Submit</button>     
+                   <br /><br />Response:&nbsp;&nbsp;<span id="updateCustomerMessage"></span>  <br />
+                <textarea id="updateCustomerResponse" style="height:150px; width:90%; font-size:.9em"></textarea>
+            </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <li class="six">
+                <h5>Disable Customer - /api/customers/[customerName]/disable</h5>
+                  POST Method disables a customer's account for a particular vault. A disabled account can no longer backup to the vault, but the existing data is preserved.
+                <table style="font-size: .9em; margin: 0px 0px 0px 0px;">
+
+                    <tr>
+                        <td> 
+                           Customer Name:                  
+                        </td>
+                        <td><input type="text" id="disableCustomerName"/></td>  
+                        <td></td>           
+                     </tr>
+                    <tr>
+                        <td colspan="2">                            
+                            <button id="disableCustomer">Submit</button>
+                        </td>
+                        <td colspan="2"></td>               
+                     </tr>
+                </table>
+                <span id="disableMessage"><br /></span>
+                <textarea id="disableResponse" style="height: 150px; width: 90%; font-size: .9em"></textarea>
+            </li>
+            <li class="seven">
+                <h5>Enable Customer - /api/customers/[customerName]/enable</h5>
+                POST Method enables a customer's account for a particular vault. 
+                <table style="font-size: .9em; margin: 0px 0px 0px 0px;">
+
+                    <tr>
+                        <td> 
+                           Customer Name:                  
+                        </td>
+                        <td><input type="text" id="enableCustomerName"/></td>  
+                        <td></td>           
+                     </tr>
+                    <tr>
+                        <td colspan="2">                            
+                            <button id="enableCustomer">Submit</button>
+                        </td>
+                        <td colspan="2"></td>               
+                     </tr>
+                </table>
+                <span id="enableMessage"><br /></span>
+                <textarea id="enableResponse" style="height: 150px; width: 90%; font-size: .9em"></textarea>
+            </li>
+            <li class="eight">
+                <h5>Delete Customer - /api/customers/[customerName]</h5>
+                  DELETE Method deletes permanently customer's and related data for a particular vault. 
+                <table style="font-size: .9em; margin: 0px 0px 0px 0px;">
+                    <tr>
+                        <td>Customer Name:                  
+                        </td>
+                        <td>
+                            <input type="text" id="deleteCustomerName" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="deleteCustomer">Submit</button>
+                        </td>
+                        <td colspan="2"></td>
+                    </tr>
+                </table>
+                <span id="deleteMessage"><br /></span>
+                <textarea id="deleteResponse" style="height: 150px; width: 90%; font-size: .9em"></textarea>
+            </li>
+        </ol>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<script type="text/javascript">
+    
+
+    $(document).ready(function () {
+
+        // create customer 
+        $("#createCustomer").click(function () {
+
+            alert('createCustomer Called');
+
+            var url = document.URL + "/api/customers";
+            data = new Object();
+            data['customerName'] = $("#customerName").val();
+            data['customerEmail'] = $("#customerEmail").val();
+            data['shortName'] = $("#shortName").val();
+            data['vaultName'] = $("#vault").val();
+            data['userName'] = $("#userName").val();
+            data['password'] = $("#password").val();
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: 
+                     function (data) {
+                         $("#createCustomerResponse").val(FormatJSON(data));
+                     }                    
+                    ,
+                dataType: "json"
+            });
+
+        });
+
+
+
+        // UPDATE customer 
+        $("#updateCustomer").click(function () {
+
+            $("#updateCustomerMessage").html("Processing...");
+
+            var url = document.URL + "/api/customers/" + $("#updateCustomerName").val();
+            data = new Object();
+            data['customerName'] = $("#updateNewCustomerName").val();
+            data['customerEmail'] = $("#updateEmail").val();
+            data['customerContactName'] = $("#updateContactName").val();
+            data['userName'] = $("#updateUserName").val();
+            data['password'] = $("#updatePassword").val();
+
+            $.ajax({
+                type: 'PUT',
+                url: url,
+                data: data,
+                success:
+                     function (data) {
+                         $("#updateCustomerMessage").html("");
+                         $("#updateCustomerResponse").val(FormatJSON(data));
+                     }
+                    ,
+                dataType: "json"
+            });
+
+        });
+
+
+        // get customers 
+        $("#getCustomers").click(function () {
+            $("#getCustomersMessage").html("Processing...<br/>");
+
+            var url = document.URL + "/api/customers";
+            data = new Object();
+            if ($('#getCustomersPopulateComputers').is(":checked")) {
+                data['populateComputers'] = "true";
+            } else {
+                data['populateComputers'] = "false";
+            }
+
+            if ($('#getCustomersPopulateUsage').is(":checked")) {
+                data['populateUsage'] = "true";
+            } else {
+                data['populateUsage'] = "false";
+            }
+            url = url + "?populateComputers=" + data.populateComputers + "&populateUsage=" + data.populateUsage;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success:
+                     function (data) {
+                         $("#getCustomersMessage").html("<br/>");
+                         $("#getCustomersResponse").val(FormatJSON(data));
+                     }
+                    ,
+                dataType: "json"
+            });
+
+        });
+
+
+
+        // get customer
+        $("#getCustomer").click(function () {
+
+            if ($("#getCustomer_Name").val() == "") {
+                alert('Enter a customer name');
+                return;
+            }
+
+            $("#getCustomerMessage").html("Processing...<br/>");
+
+            var url = document.URL + "/api/customers/" + $("#getCustomer_Name").val();
+            data = new Object();
+            if ($('#getCustomerPopulateComputers').is(":checked")) {
+                data['populateComputers'] = "true";
+            } else {
+                data['populateComputers'] = "false";
+            }
+
+            if ($('#getCustomerPopulateUsage').is(":checked")) {
+                data['populateUsage'] = "true";
+            } else {
+                data['populateUsage'] = "false";
+            }
+            url = url + "?populateComputers=" + data.populateComputers + "&populateUsage=" + data.populateUsage;
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success:
+                     function (data) {
+                         if (data == null) {
+                             $("#getCustomerMessage").html("Not found.<br/>");
+                             $("#getCustomerResponse").val("NULL");
+                         }
+                         else {
+                             $("#getCustomerMessage").html("<br/>");
+                             $("#getCustomerResponse").val(FormatJSON(data));
+                         }
+
+                     }
+                    ,
+                dataType: "json"
+            });
+        });
+
+
+
+        // get customer computer
+        $("#getCustomerComputer").click(function () {
+            $("#getCustomerComputerMessage").html("Processing...<br/>");
+            var url = document.URL + "/api/customers/" + $("#customerComputer_Name").val() + "/computers";
+            data = new Object();
+            if ($('#customerComputerPopulateUsage').is(":checked")) {
+                data['populateUsage'] = "true";
+            } else {
+                data['populateUsage'] = "false";
+            }
+            url = url + "?populateUsage=" + data.populateUsage;
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success:
+                     function (data) {
+                         if (data == null) {
+                             $("#getCustomerComputerMessage").html("Not found.<br/>");
+                             $("#getCustomerComputerResponse").val("NULL");
+                         }
+                         else {
+                             $("#getCustomerComputerMessage").html("<br/>");
+                             $("#getCustomerComputerResponse").val(FormatJSON(data));
+                         }
+                     }
+                    ,
+                dataType: "json"
+            });
+        });
+
+
+        //disableCustomer
+        $("#disableCustomer").click(function () {
+            $("#disableMessage").html("Processing...<br/>");
+            var url = document.URL + "/api/customers/" + $("#disableCustomerName").val()+"/disable";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success:
+                     function (data) {
+                         if (data == null) {
+                             $("#disableMessage").html("Not found.<br/>");
+                             $("#disableResponse").val("NULL");
+                         }
+                         else {
+                             $("#disableMessage").html("<br/>");
+                             $("#disableResponse").val(FormatJSON(data));
+                         }
+                     }
+                    ,
+                dataType: "json"
+            });
+        });
+
+
+        //enableCustomer
+        $("#enableCustomer").click(function () {
+            $("#enableMessage").html("Processing...<br/>");
+            var url = document.URL + "/api/customers/" + $("#enableCustomerName").val() + "/enable";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success:
+                     function (data) {
+                         if (data == null) {
+                             $("#enableMessage").html("Not found.<br/>");
+                             $("#enableResponse").val("NULL");
+                         }
+                         else {
+                             $("#enableMessage").html("<br/>");
+                             $("#enableResponse").val(FormatJSON(data));
+                         }
+                     }
+                    ,
+                dataType: "json"
+            });
+        });
+
+        //deleteCustomer
+        $("#deleteCustomer").click(function () {
+            $("#deleteMessage").html("Processing...<br/>");
+            var url = document.URL + "/api/customers/" + $("#deleteCustomerName").val();
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                success:
+                     function (data) {
+                         if (data == null) {
+                             $("#deleteMessage").html("Not found.<br/>");
+                             $("#deleteResponse").val("NULL");
+                         }
+                         else {
+                             $("#deleteMessage").html("<br/>");
+                             $("#deleteResponse").val(FormatJSON(data));
+                         }
+                     }
+                    ,
+                dataType: "json"
+            });
+        });
+
+
+    });
+
+
+    function FormatJSON(oData, sIndent) {
+        if (arguments.length < 2) {
+            var sIndent = "";
+        }
+        var sIndentStyle = "    ";
+        var sDataType = RealTypeOf(oData);
+
+        // open object
+        if (sDataType == "array") {
+            if (oData.length == 0) {
+                return "[]";
+            }
+            var sHTML = "[";
+        } else {
+            var iCount = 0;
+            $.each(oData, function () {
+                iCount++;
+                return;
+            });
+            if (iCount == 0) { // object is empty
+                return "{}";
+            }
+            var sHTML = "{";
+        }
+
+        // loop through items
+        var iCount = 0;
+        $.each(oData, function (sKey, vValue) {
+            if (iCount > 0) {
+                sHTML += ",";
+            }
+            if (sDataType == "array") {
+                sHTML += ("\n" + sIndent + sIndentStyle);
+            } else {
+                sHTML += ("\n" + sIndent + sIndentStyle + "\"" + sKey + "\"" + ": ");
+            }
+
+            // display relevant data type
+            switch (RealTypeOf(vValue)) {
+                case "array":
+                case "object":
+                    sHTML += FormatJSON(vValue, (sIndent + sIndentStyle));
+                    break;
+                case "boolean":
+                case "number":
+                    sHTML += vValue.toString();
+                    break;
+                case "null":
+                    sHTML += "null";
+                    break;
+                case "string":
+                    sHTML += ("\"" + vValue + "\"");
+                    break;
+                default:
+                    sHTML += ("TYPEOF: " + typeof (vValue));
+            }
+
+            // loop
+            iCount++;
+        });
+
+        // close object
+        if (sDataType == "array") {
+            sHTML += ("\n" + sIndent + "]");
+        } else {
+            sHTML += ("\n" + sIndent + "}");
+        }
+
+        // return
+        return sHTML;
+    }
+
+    function RealTypeOf(v) {
+        if (typeof (v) == "object") {
+            if (v === null) return "null";
+            if (v.constructor == (new Array).constructor) return "array";
+            if (v.constructor == (new Date).constructor) return "date";
+            if (v.constructor == (new RegExp).constructor) return "regex";
+            return "object";
+        }
+        return typeof (v);
+    }
+
+</script>
