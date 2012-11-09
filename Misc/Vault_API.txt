@@ -1,0 +1,220 @@
+EVault Software Vault API
+Version 7.01.6124
+Release Notes, September 28, 2012
+______________________________________________________________________
+======================================================================
+CONTENTS
+
+1    OVERVIEW
+1.1    Release History
+1.2    Supported Platforms
+
+2    NEW FEATURES
+
+3    INSTALLATION NOTES
+3.1    Installation Requirements
+3.2    Conditional Requirements
+3.3    Licensing
+3.4    Install/Uninstall/Upgrade
+
+4    FIXES and KNOWN ISSUES
+4.1    Fixes
+4.2    Known Issues
+
+5    PRODUCT SUPPORT
+5.1    Technical Support 
+5.2    Product Updates
+5.3    Documentation
+ 
+______________________________________________________________________
+======================================================================
+1 OVERVIEW
+
+This document contains release notes for Vault API version 7.01.
+
+Vault API provides the same functionality as the Director Management
+Console, but provides the functionality programmatically through COM 
+objects. The main scenario of the Vault API is to establish a VSMP 
+communication with the vault, and then create (with a single call), 
+the customer, location, account and user hierarchy, and assign default
+storage locations.
+
+----------------------------------------------------------------------
+1.1 Release History
+
+Version 7.01.6124, Second release, September 28, 2012
+Version 7.00.6002, First release, May 21, 2012
+
+----------------------------------------------------------------------
+1.2 Supported Platforms
+
+Vault API 7.01 can be installed on most workstations (Windows XP and 
+later) to access the vault locally or remotely. 
+
+______________________________________________________________________
+======================================================================
+2 NEW FEATURES
+
+New Features in the 7.01 Release
+
+- In the CManager class, the following methods have been added for 
+  getting and setting replication and maintenance services: 
+  getMaintenanceStatus, setMaintenanceStatus, getReplServiceStatus 
+  and setReplServiceStatus.
+  
+- Billing codes can now range from 5-20 characters in length. 
+  Previously, billing codes could only be 5 characters in length.   
+
+New Features in the 7.00 Release
+
+-	In the CAccount class, new getOperatingMode and setOperatingMode 
+  methods have been added. The OperatingMode property now returns an 
+  HR INVALID GETOPMODE/SETOPMODE error if the vault has more than one 
+  replication role.
+
+-	In the CTask class, new getOperatingMode and setOperatingMode
+  methods have been added. The OperatingMode property now returns an 
+  HR INVALID GETOPMODE/SETOPMODE error if the vault has more than one 
+  replication role.
+
+-	The following new properties were defined in the CVault class: 
+  ReplicationType, ActiveRoleState, PassiveRoleState, 
+  SatelliteRoleState and BAVRoleState.
+
+-	A CStorageLocation class has been added.
+
+- New methods have been added to the CManager class for managing 
+  primary storage locations, and for activating, getting and setting 
+  licenses on a vault.
+
+-	The VaultReplicationType enum has a new value: Replication_Unknown
+
+______________________________________________________________________
+======================================================================
+3 INSTALLATION NOTES
+
+3.1 Installation Requirements
+
+- Microsoft .NET Framework 4.0 already installed
+
+Vault API uses COM objects to simplify the ability to create, delete, 
+update and enumerate Customer, Location, Computer, Task, Account and 
+User meta-data hierarchy in a managed vault environment. The COM 
+object uses the same VSMP protocol for communication with the vault 
+that is used by the Director GUI. 
+
+----------------------------------------------------------------------
+3.2 Conditional Requirements
+
+Vault API fails if it attempts to connect to a vault that has a later 
+version than its own.
+
+If your vault is upgraded to a version later than the Vault API 
+version, you must also upgrade the Vault API. This API upgrade must be
+done before the vault upgrade.
+
+Vault API can connect to a vault with a supported earlier version.
+
+----------------------------------------------------------------------
+3.3 Licensing
+
+Vault API does not need a separate license from the Director. 
+
+The Director software requires a valid license to function properly. 
+You must enter a valid vault license during the Director installation
+process. The Director will function with this license for only 30 days 
+unless you activate the license during this time period at 
+http://license.evault.com. 
+
+----------------------------------------------------------------------
+3.4 Install/Uninstall/Upgrade
+
+3.4.1 Install
+
+The Vault API kit is available in a self-extracting executable 
+file: VaultAPISetup-7-01-6124.exe. This file installs the COM object.
+
+To obtain the installation file, contact your licensed service 
+provider or visit http://www.evault.com/. 
+
+The installation kit registers the COM components automatically in 
+the Director folders (32-bit and 64-bit). Only binary files are 
+installed.
+
+A fresh installation installs the Microsoft Visual C++ 2008 
+Redistributable package (x86).
+
+For installation details, see the Vault API User Guide.
+
+----------------------------------------------------------------------
+3.4.2 Uninstall
+
+You can uninstall Vault API by running the installation kit 
+executable file or using Add/Remove Programs in the Windows Control 
+Panel. 
+
+The uninstallation unregisters the COM component, and removes 
+binaries, folders and related registry entries.
+
+----------------------------------------------------------------------
+3.4.3 Upgrade
+
+You can upgrade Vault API by running the installation kit executable 
+file.
+
+During an upgrade, the installation kit checks the current version of 
+Vault API binaries.
+
+If the versions are the same, a repair/uninstall/cancel option is
+prompted. The repair option overwrites all binaries.
+
+If the current version is older than the installation kit, the 
+upgrade/uninstall/cancel option is prompted. The upgrade option 
+upgrades the Vault API to the latest version, and re-registers the new 
+component. It rolls back to the previous version in case of failure.
+
+If the current version is higher than the installation kit, the 
+installation kit shows a warning message and terminates the 
+installation.
+
+You can do a silent upgrade. A response file with default options is 
+provided. Or, you may use the -r option to generate your own response 
+file for custom settings.
+
+______________________________________________________________________
+======================================================================
+4 FIXES and KNOWN ISSUES
+
+4.1 Fixes
+
+There are no fixes in this release.
+
+----------------------------------------------------------------------
+4.2 Known Issues
+
+There are no known issues in this release.
+
+______________________________________________________________________
+======================================================================
+5 Product Support
+
+5.1 Technical Support
+
+For technical support, please contact your licensed service provider 
+or visit http://csp.evault.com/.
+
+----------------------------------------------------------------------
+5.2 Product Updates
+
+Product updates are available from your provider's website.
+
+----------------------------------------------------------------------
+5.3 Documentation
+
+The following documentation is available for Vault API: 
+
+- Vault API User Guide (Vault_API_User_Guide.pdf)
+- Vault API Release Notes (Vault_API.txt)
+
+All documentation is available on the Support website: 
+http://csp.evault.com
