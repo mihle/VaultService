@@ -27,7 +27,7 @@ See Service Documentation</a>
         <ol class="round">
             <li class="one">
                 <h5>Get All Companies</h5>
-               SOAP Method to create company on WebCC.    
+               SOAP Method to get all companies on WebCC instance.    
                 <br />          
                 <br /> 
                 <button id="getCompanies" style="font-size:.9em">Submit</button>         
@@ -129,7 +129,7 @@ See Service Documentation</a>
                     url: url,
                     success:
                          function (data) {
-                             var xmlText = new XMLSerializer().serializeToString(data);
+                             var xmlText = xml2Str(data);
                              var xmlPrettyText = vkbeautify.xml(xmlText)
                              $("#getCompaniesResponse").val(xmlPrettyText);
                          }
@@ -156,7 +156,7 @@ See Service Documentation</a>
                     data: data,
                     success: 
                          function (data) {
-                             var xmlText = new XMLSerializer().serializeToString(data);
+                             var xmlText = xml2Str(data);
                              var xmlPrettyText = vkbeautify.xml(xmlText)
                              $("#createCompanyResponse").val(xmlPrettyText);
                          }                    
@@ -201,7 +201,7 @@ See Service Documentation</a>
                     data: data,
                     success:
                          function (data) {
-                             var xmlText = new XMLSerializer().serializeToString(data);
+                             var xmlText = xml2Str(data);
                              var xmlPrettyText = vkbeautify.xml(xmlText)
                              $("#createUserResponse").val(xmlPrettyText);
                          }
@@ -215,5 +215,22 @@ See Service Documentation</a>
 
         });
 
+
+        function xml2Str(xmlNode) {
+            try {
+                // Gecko-based browsers, Safari, Opera.
+                return (new XMLSerializer()).serializeToString(xmlNode);
+            }
+            catch (e) {
+                try {
+                    // Internet Explorer.
+                    return xmlNode.xml;
+                }
+                catch (e) {//Strange Browser ??
+                    alert('Xmlserializer not supported');
+                }
+            }
+            return false;
+        }
 
     </script>
