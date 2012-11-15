@@ -1,0 +1,256 @@
+﻿<header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p class="site-title">
+                <a href="~/">EVault Vault Web API</a></p>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1 >Welcome to EVault Vault Web API!</h1><br />
+                <h2>Quick Start Guide</h2>
+            </hgroup>
+            <p>
+               Here is a quick guide to get you up and running using the Vault Web API .   <a href="~/">See Test Method Page</a>
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h3>API Introduction</h3>
+        <p>
+            The EVault Vault API Service is a RESTful web service that acts as wrapper around the Vault COM object and exposes core functionality of the Vault via RESTful endpoints.  The Vault COM object itself makes direct remote calls to the Vault.  Note, there is no security context involved in accessing the web method.  It assumed that machine to machine security is enforced at the network level.
+        </p>
+        <ol class="round">
+            <li class="one">
+                <h5>Getting Customer Details on the Vault!</h5>
+                <pre id="getCustomersPre">http://localhost:51970/api/customers
+                </pre>
+               This is a simple REST GET method that returns all the customers on a particular vault.  Setting the Accept Content-Type to application/json, the method will return a json list of customers on the vault.
+ 
+               <br /><br /><span style="font-weight:bold">Example Customer Object:</span> <br />
+                <pre id="createCustomerResponse">{
+        "CustomerName": "BouygueTelecom",
+        "CustomerAddress": "123 Canary Street",
+        "CustomerCity": "",
+        "CustomerZipCode": "",
+        "CustomerState": "",
+        "CustomerCountry": "",
+        "CustomerURL": "",
+        "CustomerNotes": "",
+        "CustomerEmail": "",
+        "CustomerContactName": "",
+        "VaultName": "VaultTest",
+        "ShortName": "TestShortName",
+        "Address": "",
+        "UserName": "testUserName",
+        "Domain": "",
+        "Description": "",
+        "DefaultRaidArea": "SG01",
+        "DefaultWorkArea": "",
+        "BillingCode": "",
+        "Computers": []
+} </pre>
+                <p>If you want to return a specific customer, specify the customer name in the url route.
+
+
+                </p>
+                 <pre id="getCustomerPre">/api/customers/BouygueTelecom
+                </pre>
+            </li>
+            <li class="two">
+                <h5>Creating a New Customer</h5>
+                  To create a customer, simply send a POST request with the customer object in the post body.
+
+                <br /><br />Url:<br />
+                 <pre id="createCustomerPre">
+
+                 </pre>
+                        <br />Post body:<br />
+              <pre>
+{ 
+    "customerName:  "TestCustomerName",
+    "customerEmail: "test@gmail.com",
+    "shortName:     "TestShortName",
+    "userName:      "testuser",
+    "password":     "Backup!"
+}
+              </pre>
+                The response will be a result object contain a success code and any potential error message.  Return code of 0 means success.
+                <pre>{
+    "ReturnCode": 0,
+    "Message": "success",
+    "IsError": false,
+    "Results": {
+        "CustomerName": "tester2",
+        "CustomerAddress": "",
+        "CustomerCity": "",
+        "CustomerZipCode": "",
+        "CustomerState": "",
+        "CustomerCountry": "",
+        "CustomerURL": "",
+        "CustomerNotes": "",
+        "CustomerEmail": "john.doe@gmail.com",
+        "CustomerContactName": "",
+        "VaultName": "",
+        "ShortName": "vaultShortName",
+        "Address": "",
+        "UserName": "userName",
+        "Password": "11",
+        "Domain": "",
+        "Description": "",
+        "DefaultRaidArea": "",
+        "DefaultWorkArea": "",
+        "BillingCode": "F70FD",
+        "Computers": []
+    }
+}
+
+                </pre>
+            </li>
+            <li class="three">
+                <h5>Enabling/Disabling a Customer</h5>
+                  To enable/disable a customer, send a POST Request to the customer url to either the disable or enable route.
+                <br /><br />Disable a customer:
+                <pre id="disableCustomerPre">/api/customers/BouygueTelecom
+                </pre>
+                Enable a customer:
+                <pre id="enableCustomerPre">/api/customers/BouygueTelecom
+                </pre>
+
+            </li>
+            <li class="four">
+                <h5>Deleting Customer</h5>
+                  To delete a customer, send a DELETE request using the particular customer's path.
+                <pre id="deleteCustomerPre">/api/customers/BouygueTelecom
+                </pre>
+            </li>
+          
+        </ol>
+    </section>
+</div>
+<script type="text/javascript">
+    
+
+    $(document).ready(function () {
+        var url = window.location.protocol + "//" + window.location.host + "/";
+
+        $("#getCustomersPre").html(url + "VaultService/api/customers");
+        $("#createCustomerPre").html(url + "VaultService/api/customers");
+        $("#getCustomerPre").html(url + "VaultService/api/customers/BouygueTelecoms");
+        $("#enableCustomerPre").html(url + "VaultService/api/customers/BouygueTelecoms/enable");
+        $("#disableCustomerPre").html(url + "VaultService/api/customers/BouygueTelecoms/disable");
+        $("#deleteCustomerPre").html(url + "VaultService/api/customers/BouygueTelecoms/delete");
+
+    });
+
+
+    function FormatJSON(oData, sIndent) {
+        if (arguments.length < 2) {
+            var sIndent = "";
+        }
+        var sIndentStyle = "    ";
+        var sDataType = RealTypeOf(oData);
+
+        // open object
+        if (sDataType == "array") {
+            if (oData.length == 0) {
+                return "[]";
+            }
+            var sHTML = "[";
+        } else {
+            var iCount = 0;
+            $.each(oData, function () {
+                iCount++;
+                return;
+            });
+            if (iCount == 0) { // object is empty
+                return "{}";
+            }
+            var sHTML = "{";
+        }
+
+        // loop through items
+        var iCount = 0;
+        $.each(oData, function (sKey, vValue) {
+            if (iCount > 0) {
+                sHTML += ",";
+            }
+            if (sDataType == "array") {
+                sHTML += ("\n" + sIndent + sIndentStyle);
+            } else {
+                sHTML += ("\n" + sIndent + sIndentStyle + "\"" + sKey + "\"" + ": ");
+            }
+
+            // display relevant data type
+            switch (RealTypeOf(vValue)) {
+                case "array":
+                case "object":
+                    sHTML += FormatJSON(vValue, (sIndent + sIndentStyle));
+                    break;
+                case "boolean":
+                case "number":
+                    sHTML += vValue.toString();
+                    break;
+                case "null":
+                    sHTML += "null";
+                    break;
+                case "string":
+                    sHTML += ("\"" + vValue + "\"");
+                    break;
+                default:
+                    sHTML += ("TYPEOF: " + typeof (vValue));
+            }
+
+            // loop
+            iCount++;
+        });
+
+        // close object
+        if (sDataType == "array") {
+            sHTML += ("\n" + sIndent + "]");
+        } else {
+            sHTML += ("\n" + sIndent + "}");
+        }
+
+        // return
+        return sHTML;
+    }
+
+
+    function getBaseURL() {
+        var url = location.href;  // entire url including querystring - also: window.location.href;
+        var baseURL = url.substring(0, url.indexOf('/', 14));
+
+
+        if (baseURL.indexOf('http://localhost') != -1) {
+            // Base Url for localhost
+            var url = location.href;  // window.location.href;
+            var pathname = location.pathname;  // window.location.pathname;
+            var index1 = url.indexOf(pathname);
+            var index2 = url.indexOf("/", index1 + 1);
+            var baseLocalUrl = url.substr(0, index2);
+
+            return baseLocalUrl + "/";
+        }
+        else {
+            // Root Url for domain name
+            return baseURL + "/";
+        }
+
+    }
+
+    function RealTypeOf(v) {
+        if (typeof (v) == "object") {
+            if (v === null) return "null";
+            if (v.constructor == (new Array).constructor) return "array";
+            if (v.constructor == (new Date).constructor) return "date";
+            if (v.constructor == (new RegExp).constructor) return "regex";
+            return "object";
+        }
+        return typeof (v);
+    }
+
+</script>
