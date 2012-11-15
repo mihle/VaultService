@@ -70,7 +70,7 @@ See Service Documentation</a>
 	                    <option value="User">User</option>
 	                    <option value="ExecuteOnly">Execute only user</option>
 	                    <option value="ViewOnly">View only user</option>
-	                    <option value="Support">View only user</option>
+	                    <option value="Support">Support user</option>
                     </select>
                         </td>
                     </tr>
@@ -86,7 +86,7 @@ See Service Documentation</a>
                         <td>WebCC&nbsp;User&nbsp;Password:</td>
                         <td><input id="password" type="password" style="font-size:.9em" value=""  /></td>
                     </tr>
-                    <tr>
+@*                    <tr>
                         <td>Profile&nbsp;Account:</td>
                         <td><input id="profileAccount" type="text" style="font-size:.9em" /></td>
                         <td>Profile Address:</td>
@@ -104,7 +104,7 @@ See Service Documentation</a>
                         <td><input id="profileVaultName" type="text" style="font-size:.9em" /></td>
                         <td></td>
                         <td></td>
-                    </tr>
+                    </tr>*@
                 </table>
                 <button id="createUser" style="font-size:.9em">Submit</button>         
                    <br /><br />Response: <br />
@@ -166,7 +166,7 @@ See Service Documentation</a>
 
             });
 
-            // create company 
+            // create user 
             $("#createUser").click(function () {
 
                 if ($("#userCompanyName").val() == "") {
@@ -188,9 +188,9 @@ See Service Documentation</a>
                 var profile = new Object();
                 profile['account'] = $("#profileAccount").val();
                 profile['address'] = $("#profileAddress").val();
-                profile['user'] = $("#profileUser").val();
-                profile['password'] = $("#profilePassword").val();
-                profile['vaultName'] = $("#profileVaultName").val();
+                //profile['user'] = $("#profileUser").val();
+                //profile['password'] = $("#profilePassword").val();
+                //profile['vaultName'] = $("#profileVaultName").val();
 
                 data['profile'] = profile;
 //                alert(JSON.stringify(data));
