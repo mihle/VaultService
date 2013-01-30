@@ -14,14 +14,14 @@ namespace VaultService.Controllers
 
 
         // GET api/account
-        public List<Customer> GetCustomers(Boolean populateComputers = false, Boolean populateUsage = false)
+        public List<Customer> GetCustomers(Boolean populateComputers = false, Boolean populateUsage = false, String vault = null)
         {
 
             Result result = new Result();
             try
             {
 
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
 
                 SbeAccountManager.CManagerClass com = new SbeAccountManager.CManagerClass();
                 SbeAccountManager.ICustomerCollection customerList;
@@ -158,12 +158,12 @@ namespace VaultService.Controllers
         }
 
         // GET api/account/5
-        public Customer GetCustomer(string customerName, Boolean populateComputers = false, Boolean populateUsage = false)
+        public Customer GetCustomer(string customerName, Boolean populateComputers = false, Boolean populateUsage = false, String vault = null)
         {
             try
             {
 
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
 
                 SbeAccountManager.CManagerClass com = new SbeAccountManager.CManagerClass();
                 SbeAccountManager.ICustomerCollection customerList;
@@ -304,14 +304,14 @@ namespace VaultService.Controllers
 
         // POST api/customer
         [System.Web.Http.AcceptVerbs("POST")]
-        public Result CreateCustomer([FromBody]Customer customer)
+        public Result CreateCustomer([FromBody]Customer customer, String vault = null)
         {
             Result result = new Result();
 
             try
             {
 
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
 
 
                 //initialize all the friggin property bags necessary to create a vault.
@@ -402,12 +402,12 @@ namespace VaultService.Controllers
 
         // POST api/customer
         [System.Web.Http.AcceptVerbs("PUT")]
-        public Result UpdateCustomer([FromBody]Customer customer, string customerName)
+        public Result UpdateCustomer([FromBody]Customer customer, string customerName, String vault = null)
         {
             Result result = new Result();
             try
             {
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
 
                 SbeAccountManager.CManagerClass com = new SbeAccountManager.CManagerClass();
                 SbeAccountManager.ICustomerCollection customerList;
@@ -495,13 +495,13 @@ namespace VaultService.Controllers
 
 
         // DisableCustomer api/account/5
-        public Result DisableCustomer(string customerName)
+        public Result DisableCustomer(string customerName, String vault = null)
         {
 
             Result result = new Result();
             try
             {
-                   ConnectionInfo connInfo = setConnectionInfo();
+                   ConnectionInfo connInfo = setConnectionInfo(vault);
 
                 SbeAccountManager.CManagerClass com = new SbeAccountManager.CManagerClass();
                 SbeAccountManager.ICustomerCollection customerList;
@@ -574,13 +574,13 @@ namespace VaultService.Controllers
 
 
         // DisableCustomer api/account/5
-        public Result EnableCustomer(string customerName)
+        public Result EnableCustomer(string customerName, String vault = null)
         {
 
             Result result = new Result();
             try
             {
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
 
                 SbeAccountManager.CManagerClass com = new SbeAccountManager.CManagerClass();
                 SbeAccountManager.ICustomerCollection customerList;
@@ -657,13 +657,13 @@ namespace VaultService.Controllers
 
         // DisableCustomer api/account/5
         [System.Web.Http.AcceptVerbs("DELETE")]
-        public Result DeleteCustomer(string customerName)
+        public Result DeleteCustomer(string customerName, String vault = null)
         {
 
             Result result = new Result();
             try
             {
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
 
                 SbeAccountManager.CManagerClass com = new SbeAccountManager.CManagerClass();
                 SbeAccountManager.ICustomerCollection customerList;
@@ -725,14 +725,14 @@ namespace VaultService.Controllers
 
 
         // GET specific vault computer
-        public List<Computer> GetCustomerComputers(String customerName, Boolean populateUsage = false)
+        public List<Computer> GetCustomerComputers(String customerName, Boolean populateUsage = false, String vault = null)
         {
             List<Computer> computerList = new List<Computer>();
 
             try
             {
 
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
 
                 SbeAccountManager.CManagerClass com = new SbeAccountManager.CManagerClass();
                 SbeAccountManager.ICustomerCollection customerList;
@@ -872,7 +872,7 @@ namespace VaultService.Controllers
 
 
         // GET specific vault computer
-        public Computer GetCustomerComputer(String customerName, String computerName)
+        public Computer GetCustomerComputer(String customerName, String computerName, String vault = null)
         {
             Computer computer = new Computer();
             computer.Name = "test";
@@ -883,18 +883,42 @@ namespace VaultService.Controllers
 
 
         // private helper method to set connection info from config
-        private ConnectionInfo setConnectionInfo()
+        private ConnectionInfo setConnectionInfo(String vault)
         {
+
             ConnectionInfo connInfo = new ConnectionInfo();
-            connInfo.Address = ConfigurationManager.AppSettings["Address"];
-            connInfo.DefaultRaidArea = ConfigurationManager.AppSettings["DefaultRaidArea"];
-            connInfo.DefaultWorkArea = ConfigurationManager.AppSettings["DefaultWorkArea"];
-            connInfo.Description = ConfigurationManager.AppSettings["Description"];
-            connInfo.Domain = ConfigurationManager.AppSettings["Domain"];
-            connInfo.ConnectionPassword = ConfigurationManager.AppSettings["ConnectionPassword"];
-            connInfo.ConnectionUser = ConfigurationManager.AppSettings["ConnectionUser"];
             connInfo.LogFileName = ConfigurationManager.AppSettings["LogFileName"];
             connInfo.AuditFileName = ConfigurationManager.AppSettings["AuditFileName"];
+
+            // if no vault is passed in, use default connection from config
+            if (vault == null)
+            {
+                connInfo.Address = ConfigurationManager.AppSettings["Address"];
+                connInfo.DefaultRaidArea = ConfigurationManager.AppSettings["DefaultRaidArea"];
+                connInfo.DefaultWorkArea = ConfigurationManager.AppSettings["DefaultWorkArea"];
+                connInfo.Description = ConfigurationManager.AppSettings["Description"];
+                connInfo.Domain = ConfigurationManager.AppSettings["Domain"];
+                connInfo.ConnectionPassword = ConfigurationManager.AppSettings["ConnectionPassword"];
+                connInfo.ConnectionUser = ConfigurationManager.AppSettings["ConnectionUser"];
+
+            }
+            else
+            {
+                // look up correct connection from config 
+                connInfo.Address = ConfigurationManager.AppSettings[vault+"-"+"Address"];
+                connInfo.DefaultRaidArea = ConfigurationManager.AppSettings[vault+"-"+"DefaultRaidArea"];
+                connInfo.DefaultWorkArea = ConfigurationManager.AppSettings[vault+"-"+"DefaultWorkArea"];
+                connInfo.Description = ConfigurationManager.AppSettings[vault+"-"+"Description"];
+                connInfo.Domain = ConfigurationManager.AppSettings[vault+"-"+"Domain"];
+                connInfo.ConnectionPassword = ConfigurationManager.AppSettings[vault+"-"+"ConnectionPassword"];
+                connInfo.ConnectionUser = ConfigurationManager.AppSettings[vault+"-"+"ConnectionUser"];
+                connInfo.LogFileName = ConfigurationManager.AppSettings[vault+"-"+"LogFileName"];
+                connInfo.AuditFileName = ConfigurationManager.AppSettings[vault+"-"+"AuditFileName"];
+
+
+            }
+  
+
 
             return connInfo;
         }
@@ -942,7 +966,7 @@ namespace VaultService.Controllers
 
 
 
-        public Result CreateWebccCompany(ref  WebCCApi.Company webccCompany)
+        public Result CreateWebccCompany(ref  WebCCApi.Company webccCompany, String vault = null)
         {
 
             
@@ -984,7 +1008,7 @@ namespace VaultService.Controllers
 
 
 
-        public Result CreateWebCCUser(ref WebCCApi.User webccUser, string clientGuid)
+        public Result CreateWebCCUser(ref WebCCApi.User webccUser, string clientGuid, String vault = null)
         {
 
             Result result = new Result();
@@ -992,7 +1016,7 @@ namespace VaultService.Controllers
             try
             {
 
-                ConnectionInfo connInfo = setConnectionInfo();
+                ConnectionInfo connInfo = setConnectionInfo(vault);
                 WebCCApi.Service webccAPI = new WebCCApi.Service();
 
                 webccUser.Profile.VaultName = connInfo.VaultName;
